@@ -29,15 +29,15 @@ function updateList(inventoryElement, db, filterOptions) {
         var property = db[i];
         if (propertyMatches(filterOptions, property))
             matchingProperties.push(property);
-    //separate pending from available
 
-    for (var x = 0; x < matchingProperties.length; ++x) {
-        if (matchingProperties[x].statusValue == 'pending'){
+        //separate pending from available
+        for (var x = 0; x < matchingProperties.length; ++x) {
+            if (matchingProperties[x].statusValue == 'pending') {
 
-            pendingProperties.push(matchingProperties[x]);
-            matchingProperties.splice(x, 1);
+                pendingProperties.push(matchingProperties[x]);
+                matchingProperties.splice(x, 1);
+            }
         }
-    }
 
     }
 
@@ -45,144 +45,144 @@ function updateList(inventoryElement, db, filterOptions) {
 
     switch (filterOptions.sortBy) {
         case "status":
-        {
-            matchingProperties.sort(function(a, b) {
-                return b.statusValue < a.statusValue;
-            });
-        };
-        break;
+            {
+                matchingProperties.sort(function(a, b) {
+                    return b.statusValue < a.statusValue;
+                });
+            };
+            break;
         case "date":
-        {
-            matchingProperties.sort(function(a, b) {
-                return b.date > a.date ? 1 : b.date < a.date ? -1 : 0;
-            });
-            pendingProperties.sort(function(a, b) {
-                return b.date > a.date ? 1 : b.date < a.date ? -1 : 0;
-            });
-        };
-        break;
+            {
+                matchingProperties.sort(function(a, b) {
+                    return b.date > a.date ? 1 : b.date < a.date ? -1 : 0;
+                });
+                pendingProperties.sort(function(a, b) {
+                    return b.date > a.date ? 1 : b.date < a.date ? -1 : 0;
+                });
+            };
+            break;
         case "views":
-        {
-            matchingProperties.sort(function(a, b) {
-                return parseInt(b.views) - parseInt(a.views);
-            });
-            pendingProperties.sort(function(a, b) {
-                return parseInt(b.views) - parseInt(a.views);
-            });
-        };
-        break;
+            {
+                matchingProperties.sort(function(a, b) {
+                    return parseInt(b.views) - parseInt(a.views);
+                });
+                pendingProperties.sort(function(a, b) {
+                    return parseInt(b.views) - parseInt(a.views);
+                });
+            };
+            break;
         case "tenant_asc":
-        {
-            matchingProperties.sort(function(a, b) {
-                return a.title.localeCompare(b.title);
-            });
-            pendingProperties.sort(function(a, b) {
-                return a.title.localeCompare(b.title);
-            });
-        };
-        break;
+            {
+                matchingProperties.sort(function(a, b) {
+                    return a.title.localeCompare(b.title);
+                });
+                pendingProperties.sort(function(a, b) {
+                    return a.title.localeCompare(b.title);
+                });
+            };
+            break;
         case "tenant_desc":
-        {
-            matchingProperties.sort(function(a, b) {
-                return b.title.localeCompare(a.title);
-            });
-            pendingProperties.sort(function(a, b) {
-                return b.title.localeCompare(a.title);
-            });
-        };
-        break;
+            {
+                matchingProperties.sort(function(a, b) {
+                    return b.title.localeCompare(a.title);
+                });
+                pendingProperties.sort(function(a, b) {
+                    return b.title.localeCompare(a.title);
+                });
+            };
+            break;
         case "price_up":
-        {
-            matchingProperties.sort(function(a, b) {
-                return parseInt(a.price) - parseInt(b.price);
-            });
-            pendingProperties.sort(function(a, b) {
-                return parseInt(a.price) - parseInt(b.price);
-            });
-        };
-        break;
+            {
+                matchingProperties.sort(function(a, b) {
+                    return parseInt(a.price) - parseInt(b.price);
+                });
+                pendingProperties.sort(function(a, b) {
+                    return parseInt(a.price) - parseInt(b.price);
+                });
+            };
+            break;
         case "price_down":
-        {
-            matchingProperties.sort(function(a, b) {
-                return parseInt(b.price) - parseInt(a.price);
-            });
-            pendingProperties.sort(function(a, b) {
-                return parseInt(b.price) - parseInt(a.price);
-            });
-        };
-        break;
+            {
+                matchingProperties.sort(function(a, b) {
+                    return parseInt(b.price) - parseInt(a.price);
+                });
+                pendingProperties.sort(function(a, b) {
+                    return parseInt(b.price) - parseInt(a.price);
+                });
+            };
+            break;
         case "cap_up":
-        {
-            matchingProperties.sort(function(a, b) {
-                /* Place Null values at the end */
-                if (a.capRate == ''){
-                    a.capRate = 999;
-                }
-                if (b.capRate == ''){
-                    b.capRate = 999;
-                }
+            {
+                matchingProperties.sort(function(a, b) {
+                    /* Place Null values at the end */
+                    if (a.capRate == '') {
+                        a.capRate = 999;
+                    }
+                    if (b.capRate == '') {
+                        b.capRate = 999;
+                    }
                     return a.capRate - b.capRate;
-            });
-            pendingProperties.sort(function(a, b) {
-                /* Place Null values at the end */
-                if (a.capRate == ''){
-                    a.capRate = 999;
-                }
-                if (b.capRate == ''){
-                    b.capRate = 999;
-                }
+                });
+                pendingProperties.sort(function(a, b) {
+                    /* Place Null values at the end */
+                    if (a.capRate == '') {
+                        a.capRate = 999;
+                    }
+                    if (b.capRate == '') {
+                        b.capRate = 999;
+                    }
                     return a.capRate - b.capRate;
-            });
-        };
-        break;
+                });
+            };
+            break;
         case "cap_down":
-        {
-            matchingProperties.sort(function(a, b) {
-                if (a.capRate == 999){
-                    a.capRate = '';
-                }
-                if (b.capRate == 999){
-                    b.capRate = '';
-                }
-                return b.capRate - a.capRate;
-            });
-            pendingProperties.sort(function(a, b) {
-                if (a.capRate == 999){
-                    a.capRate = '';
-                }
-                if (b.capRate == 999){
-                    b.capRate = '';
-                }
-                return b.capRate - a.capRate;
-            });
-        };
-        break;
+            {
+                matchingProperties.sort(function(a, b) {
+                    if (a.capRate == 999) {
+                        a.capRate = '';
+                    }
+                    if (b.capRate == 999) {
+                        b.capRate = '';
+                    }
+                    return b.capRate - a.capRate;
+                });
+                pendingProperties.sort(function(a, b) {
+                    if (a.capRate == 999) {
+                        a.capRate = '';
+                    }
+                    if (b.capRate == 999) {
+                        b.capRate = '';
+                    }
+                    return b.capRate - a.capRate;
+                });
+            };
+            break;
         case "state":
-        {
-            matchingProperties.sort(function(a, b) {
-                return a.state.localeCompare(b.state);
-            });
-            pendingProperties.sort(function(a, b) {
-                return a.state.localeCompare(b.state);
-            });
-        };
-        break;
+            {
+                matchingProperties.sort(function(a, b) {
+                    return a.state.localeCompare(b.state);
+                });
+                pendingProperties.sort(function(a, b) {
+                    return a.state.localeCompare(b.state);
+                });
+            };
+            break;
         case "near":
-        {
-            matchingProperties.sort(function(a, b) {
-                    // a[distance] = Math.sqrt( Math.pow( user_lat - a.latitude, 2 ) + Math.pow( user_long - a.longitude, 2 ) );
-                    // b[distance] = Math.sqrt( Math.pow( user lat - b.latitude, 2 ) + Math.pow( user_long - b.longitude, 2 ) );
+            {
+                matchingProperties.sort(function(a, b) {
+                    a[distance] = Math.sqrt(Math.pow(user_lat - a.latitude, 2) + Math.pow(user_long - a.longitude, 2));
+                    b[distance] = Math.sqrt(Math.pow(user lat - b.latitude, 2) + Math.pow(user_long - b.longitude, 2));
                     // alert(a.longitude);
                     return b.distance - a.distance;
                 });
-            pendingProperties.sort(function(a, b) {
-                    // a[distance] = Math.sqrt( Math.pow( user_lat - a.latitude, 2 ) + Math.pow( user_long - a.longitude, 2 ) );
-                    // b[distance] = Math.sqrt( Math.pow( user lat - b.latitude, 2 ) + Math.pow( user_long - b.longitude, 2 ) );
+                pendingProperties.sort(function(a, b) {
+                    a[distance] = Math.sqrt(Math.pow(user_lat - a.latitude, 2) + Math.pow(user_long - a.longitude, 2));
+                    b[distance] = Math.sqrt(Math.pow(user lat - b.latitude, 2) + Math.pow(user_long - b.longitude, 2));
                     // alert(a.longitude);
                     return b.distance - a.distance;
                 });
-        };
-        break;
+            };
+            break;
     }
 
     //Append pending to available array
@@ -200,10 +200,6 @@ function updateList(inventoryElement, db, filterOptions) {
     paginationControlsDiv.empty();
     var paginator = new Paginator(itemsPerPage, inventoryElement, paginationControlsDiv, propertyElements);
 
-    //Place pending at end
-    // matchingProperties = matchingProperties.sort(function(a,b){ //Reorder to display 'pending' properties last
-    // 	return b.status - a.status;
-    // });
 
     return matchingProperties.length;
 }
@@ -246,11 +242,11 @@ function createPropertyElement(property) {
     var propertyThumbnail = jQuery("<div class='image'>");
 
     // if(property.views > 0){
-    // 	var propertyViews = jQuery("<div class='views'>");
-    // 	if(property.views == 1)
-    // 		propertyViews.append(property.views.toString() + ' View');
-    // 	else if(property.views > 1)
-    // 		propertyViews.append(property.views.toString() + ' Views');
+    //  var propertyViews = jQuery("<div class='views'>");
+    //  if(property.views == 1)
+    //      propertyViews.append(property.views.toString() + ' View');
+    //  else if(property.views > 1)
+    //      propertyViews.append(property.views.toString() + ' Views');
     // }
 
     propertyThumbnail.append('<a href="' + property.permalink.toString() + '"><img src="' + property.thumbnail.toString() + '" />' + (property.views > 0 ? '<div class="views">' + (property.views > 1 ? property.views.toString() + ' Views' : property.views.toString() + ' View') + '</div>' : '') + '</a>');

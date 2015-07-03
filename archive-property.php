@@ -64,7 +64,7 @@
                             <option value="cap_up">Cap Rate</option><!--ASC-->
                             <!-- <option value="cap_down">Cap Rate (high to low)</option> --><!--DESC-->
                             <?php } ?>
-                            <!-- <option value="near">Near Me</option>--><!--DESC--><!--TODO-->
+                             <option value="near">Near Me</option><!--DESC-->
                             <option value="state">State</option><!--ASC-->
                             <?php if ( get_theme_mod('enable_views') &&
                             !$sold ) { ?>
